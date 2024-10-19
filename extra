@@ -1,0 +1,39 @@
+create TABLE users {
+    --users + resumes + userid
+    email VARCHAR(255) PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    resumeInfo VARCHAR(255) NOT NULL --how are storing resumes
+}
+
+
+create table questions {
+    --userid, questionid, questiontext, answer
+    email VARCHAR(255) NOT NULL,
+    questionid INT NOT NULL,
+    question VARCHAR(255) NOT NULL,
+    answer VARCHAR(255) --answer can be empty ig
+    FOREIGN KEY (email) REFERENCES users(email)
+}
+
+create table analysis {
+    --[sentiment, keywords, crutchwords, better version*
+    email VARCHAR(255) NOT NULL,
+    questionid INT NOT NULL,
+    sentiment VARCHAR(255) NOT NULL, --how do we store this
+    keywords VARCHAR(255) NOT NULL,
+    crutchWords VARCHAR(255) NOT NULL,
+    FOREIGN KEY (email) REFERENCES users(email)
+    FOREIGN KEY (questionid) REFERENCES questions(questionid)
+    PRIMARY KEY (email, questionid)
+}
+
+5clJh7dsITRiDi6scX30j9E80EZqrhsN
+
+const db = mysql.createConnection({
+    host: 'undefined',
+    port: undefined,
+    user: 'admin',
+    password: 5clJh7dsITRiDi6scX30j9E80EZqrhsN,
+    database: '<Database Name>',
+    
+});
