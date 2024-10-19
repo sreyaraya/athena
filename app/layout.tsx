@@ -1,6 +1,6 @@
 'use client'
 
-import NavBar from '@/components/Navbar'
+//import NavBar from '@/components/Navbar'
 import './globals.css'
 import { SessionProvider } from "next-auth/react"
 
@@ -20,6 +20,9 @@ export default function RootLayout({
       
       <head>
       <link rel="icon" href="/images/favicon.svg" type="image/svg+xml"/>
+      
+      {// eslint-disable-next-line @next/next/no-page-custom-font
+}
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&display=swap" rel="stylesheet"/>
         </head>
        
@@ -27,7 +30,7 @@ export default function RootLayout({
       <body>
 
       <SessionProvider >
-      <NavBar/>
+      {/* <NavBar/> */}
       {children}
       </SessionProvider>
       
