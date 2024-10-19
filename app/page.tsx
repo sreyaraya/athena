@@ -53,17 +53,12 @@ export default function Home() {
           <div className="mt-12 flex justify-start gap-10 text-lg ">
             <button onClick={() => signIn()} className="p-2 hover:bg-purple-400 text-white  rounded-sm duration-200 border border-white hover:scale-110 active:scale-90">
               <Link href={'/auth'}>
-              Sign Up
+              Let's get started!
               </Link>
               
             </button>
 
-            <button onClick={() => signIn()} className="p-2 hover:bg-purple-400 text-white  rounded-sm duration-200 border border-white  hover:scale-110 active:scale-90">
-              <Link href={'/auth'}>
-              Log In
-              </Link>
-              
-            </button>
+           
           </div>
           
           </div>
