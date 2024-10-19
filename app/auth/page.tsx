@@ -18,11 +18,27 @@ const projects = [
 import { useSession, signIn, signOut } from "next-auth/react"
 import Image from "next/image";
 export default function Component() {
-  const { data: session } = useSession()
-  if (session) {
+  const { data: session, status } = useSession()
+
+  if(status=="loading") return (
+    <div className=''>
+        <div className='text-white text-8xl  flex justify-center items-center'>
+             <div className='mt-64 underline p-10'>
+            LOADING...
+             </div>
+    </div>
+    </div>
+  )
+  else if (session) {
     return (
-      <>
-       <div className="grid grid-cols-3 gap-4 mt-32 m-8 text-2xl">
+      <div className=''>
+        <div className='text-white text-5xl flex justify-center items-center'>
+             <div className='mt-12 underline '>
+             {session.user?.name.split(' ')[0]}'s History
+             </div>
+        </div>
+       <div className="grid grid-cols-3 gap-4 mt-12 m-8 text-2xl">
+        
       {projects.map((project, index) =>
         index==0 ? (
           <button
@@ -44,7 +60,7 @@ export default function Component() {
       <br />
         Signed in as {session.user.id} <br />
         <button onClick={() => signOut()}>Sign out</button>
-      </>
+      </div>
     )
   }
 
