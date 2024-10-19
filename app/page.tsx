@@ -5,6 +5,9 @@ import Image from "next/image";
 import soundthingy from "../components/nounsound.svg"
 import waves from "../components/waveswhite.png"
 import speak from "../components/speak.svg"
+import arrow from "../components/arrow.svg"
+import bubble from "../components/bubble.svg"
+import analytics from "../components/analytics.svg"
 
 
 export default function Home() {
@@ -65,11 +68,11 @@ export default function Home() {
           
           </div>
 
-          <div className="flex gap-8 justify-center w-full mt-10 bg-darkpurple h-64">
-           
-            <div className="bg-black flex-col flex">
+          <div className="mb-52 text-2xl justify-items-stretch  flex gap-8 justify-center w-full pl-20 pr-20 mt-10  h-64">
+          
+            <div className="flex-1 flex-col flex items-center">
               <div className="">
-              <Image width={"200"} src={speak}>
+              <Image width={"200"} src={speak} style={{ transform: 'scaleX(-1)' }}>
 
                 </Image>
                 </div>
@@ -78,34 +81,44 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="bg-red flex flex-col">
-              <div>
-                  Athena will give you questions and listen critically to analyze your answers
-                </div>
-              </div>
+            <Image className=" flex-1 -ml-8 -mr-8" width={"200"} src={arrow} style={{ transform: 'scale(0.5)' }}>
 
-              <div className="bg-red flex flex-col">
-              <div>
-                  Get a post interview debrief with our original PrepFeedback Score
+            </Image>
+
+            <div className="flex-1 flex-col flex items-center">
+              <div className="">
+              <Image width={"200"} src={bubble} style={{ transform: 'scaleX(-1) scale(0.7)' }}>
+
+                </Image>
                 </div>
-              </div>
+                <div>
+                Athena will give you questions and listen critically to analyze your answers
+
+                </div>
+            </div>
+
+            <Image className=" flex-1 -ml-8 -mr-8" width={"200"} src={arrow} style={{ transform: 'scale(0.5)' }}>
+
+            </Image>
+            <div className="flex-1 flex-col flex items-center">
+              <div className="">
+              <Image width={"200"} src={analytics} style={{ transform: 'scaleX(-1) scale(0.75)' }}>
+
+                </Image>
+                </div>
+                <div>
+                Get post-interview analysis with our unique FeedbackScore dashboard
+
+                </div>
+            </div>
+
 
 
 
           </div>
           
 
-          <div className="flex self-start w-full mt-96 bg-darkpurple h-64">
-            <div className="flex flex-col justify-center w-1/6 h-full text-white bg-darkpurple">
-              <p className="m-6 text-5xl ">
-                How does it work?
-              </p>
-            </div>
-            <div className="flex flex-col justify-center w-5/6 h-full p-20 text-3xl text-white bg-darkpurple">
-              Siteify allows users to create beautiful ai-enhanced portfolio websites, automatically integrated with their projects, all with a few simple clicks! 
-            </div>
-
-          </div>
+          
       </div>
     </div>
   )
