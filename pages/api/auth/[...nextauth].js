@@ -36,6 +36,7 @@ export default NextAuth({
       if (user) {
         token.id = user.id; // or any other data you want to include
       }
+      
       return token;
     }},
       
