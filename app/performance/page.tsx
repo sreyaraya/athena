@@ -92,31 +92,20 @@ export default function ChartComponent(email: string, interview: number) {
   }, []);
 
   return (
-    <div>
-      <LineChart
-        xAxis={[{ data: chartData.interactions }]}
-        series={[
-          {
-            data: chartData.determination,
-            label: 'Determination',
-            valueFormatter: (value) => (value == null ? 'NaN' : value.toFixed(3)),
-          },
-          {
-            data: chartData.awkwardness,
-            label: 'Awkwardness',
-            valueFormatter: (value) => (value == null ? 'NaN' : value.toFixed(2)),
-          },
-          {
-            data: chartData.excitement,
-            label: 'Excitement',
-            valueFormatter: (value) => (value == null ? 'NaN' : value.toFixed(2)),
-          },
-        ]}
-        height={150}
-        margin={{ top: 25, bottom: 25 }}
-      />
+    <div className="flex bg-red-700 ">
+       <div className="min-h-screen bg-purple-200 p-6">
+      {/* Title Section */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-left text-gray-800 my-6">
+          Apple SWE Intern Interview
+        </h1>
+      </div>
 
-      <PieChart
+
+      <div className="grid grid-cols-4 gap-6">
+        {/* Top Left Small Chart */}
+        <div className="col-span-1 bg-white rounded-md shadow-md p-4 h-64">
+        <PieChart
         series={[
           {
             data: pieData
@@ -125,6 +114,105 @@ export default function ChartComponent(email: string, interview: number) {
         width={400}
         height={200}
       />
+        </div>
+
+   
+        <div className="col-span-1 bg-white rounded-md shadow-md p-4 h-64 flex justify-center items-center">
+            <div>
+              Overall FeedbackScore:
+              
+            </div>
+        </div>
+
+
+        <div className="col-span-2 bg-white rounded-md shadow-md p-4 h-64 flex justify-center items-center">
+            <div>
+              <div className="flex flex-col items-center justify-center">
+              Things that were well done and things that needed improvement
+
+              </div>
+              
+            </div>
+        </div>
+
+        {/* Large Center Chart */}
+        <div className="col-span-4 bg-white rounded-md shadow-lg p-6 h-96 mt-4">
+        <LineChart
+      xAxis={[{ data: chartData.interactions }]}
+      series={[
+        {
+          data: chartData.determination,
+          label: 'Determination',
+          valueFormatter: (value) => (value == null ? 'NaN' : value.toFixed(3)),
+        },
+        {
+          data: chartData.awkwardness,
+          label: 'Awkwardness',
+          valueFormatter: (value) => (value == null ? 'NaN' : value.toFixed(2)),
+        },
+        {
+          data: chartData.excitement,
+          label: 'Excitement',
+          valueFormatter: (value) => (value == null ? 'NaN' : value.toFixed(2)),
+        },
+      ]}
+      height={150}
+      margin={{ top: 25, bottom: 25 }}
+    />
+        </div>
+
+        {/* Bottom Left Small Chart */}
+        <div className="col-span-2 bg-white rounded-md shadow-md p-4 h-64 mt-4">
+          Buzzwords matched according to job description
+        </div>
+
+        {/* Bottom Right Small Chart */}
+        <div className="col-span-2 bg-white rounded-md shadow-md p-4 h-64 mt-4">
+          Overall here are some tips for next time
+        </div>
+      </div>
+    </div>
+     
+
+      
     </div>
   );
 }
+
+
+
+
+{/* <PieChart
+        series={[
+          {
+            data: pieData
+          }
+        ]}
+        width={400}
+        height={200}
+      /> */}
+
+
+
+    //   <LineChart
+    //   xAxis={[{ data: chartData.interactions }]}
+    //   series={[
+    //     {
+    //       data: chartData.determination,
+    //       label: 'Determination',
+    //       valueFormatter: (value) => (value == null ? 'NaN' : value.toFixed(3)),
+    //     },
+    //     {
+    //       data: chartData.awkwardness,
+    //       label: 'Awkwardness',
+    //       valueFormatter: (value) => (value == null ? 'NaN' : value.toFixed(2)),
+    //     },
+    //     {
+    //       data: chartData.excitement,
+    //       label: 'Excitement',
+    //       valueFormatter: (value) => (value == null ? 'NaN' : value.toFixed(2)),
+    //     },
+    //   ]}
+    //   height={150}
+    //   margin={{ top: 25, bottom: 25 }}
+    // />
