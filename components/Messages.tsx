@@ -28,6 +28,8 @@ const Messages = forwardRef(function Messages(
           values: msg.models.prosody?.scores,
         });
         counterRef.current += 1;
+      } else {
+        console.log("session completed")
       }
     });
 
