@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import GithubProvider from "../../../lib/customProvider"
 import GoogleProvider from "next-auth/providers/google";
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, fetchSignInMethodsForEmail } from "firebase/auth";
 import { initializeApp } from 'firebase/app';
 import { collection, doc, setDoc, getFirestore } from "firebase/firestore";  // Firestore functions
 
@@ -54,13 +54,18 @@ export default NextAuth({
     async jwt({ token, user }) {
       // If a user is logged in, add their info to the token
       if (user) {
+
+        const signInMethods = await fetchSignInMethodsForEmail(auth, user.email);
+
         token.id = user.id; // or any other data you want to include
         token.email = user.email;
         token.name = user.name;
-        
-        const existingUser = auth.currentUser;
 
-        if (!existingUser) {
+        if(signInMethods.length()<1){
+        
+        }
+
+        const existingUser = auth.currentUser;
           try{
             const userCredential = await createUserWithEmailAndPassword(auth, user.email, user.id);
 
@@ -73,7 +78,6 @@ export default NextAuth({
           } catch (err) {
             console.error('Error creating/updating user in Firebase:', err);
           }
-        }
         
       }
       
