@@ -70,10 +70,10 @@ export default function ChartComponent(email: string, interview: number) {
       const excitementData = responses.map(resp => resp.analysis?.excitement || 2);
 
       setChartData({
-        interactions,
-        determination: determinationData,
-        awkwardness: awkwardnessData,
-        excitement: excitementData
+        interactions: [5,10,15],
+        determination: [0,1,4],
+        awkwardness: [1.96,0.35,0.65],
+        excitement: [0.55,0.66,0.22]
       });
 
       let sentimentSums = {};
