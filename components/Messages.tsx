@@ -15,6 +15,9 @@ const Messages = forwardRef(function Messages(
   const processedIndices = useRef(new Set());
   const counterRef = useRef(0);
 
+
+
+
   useEffect(() => {
     const newVectors = [];
 
@@ -40,11 +43,20 @@ const Messages = forwardRef(function Messages(
     console.log(sentimentVectors);
   }, [messages]);
   
+  useEffect(() => {
+    givedata(messages.at(-1))
+
+  }, [messages]);
+  
+
   return (
     <motion.div
 
-  className="grow rounded-lg overflow-auto p-4 border-white border-2 bg-white min-w-80"
+  className="grow rounded-md overflow-auto p-4 border-white border-2 bg-white min-w-80"
 >
+  <div className=" p-2 mb-8  text-center text-2xl text-purple-900  border-4 border-purple-900 rounded-sm">
+    Live Chat 
+  </div>
   <motion.div className="max-w-2xl justify-items-center mx-auto w-full flex flex-col gap-4 pb-24">
     <AnimatePresence>
       
@@ -63,21 +75,24 @@ const Messages = forwardRef(function Messages(
                 "w-[80%]",
                 "bg-card",
                 "self-center",
-                "border border-border rounded",
-                msg.type === "user_message" ? "ml-auto" : ""
+                "border-none",
+                "drop-shadow-sm",
+                "border-4",
+                "rounded-md",
+                "border-puruple-400",
+                "text-darkpurple",
+                msg.type === "user_message" ? "ml-12 bg-purple-50" : "-ml-12 bg-purple-100"
               )}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 0 }}
             >
-              <div className={cn("text-xs capitalize font-medium leading-none opacity-50 pt-4 px-3")}>
-                {msg.message.role}
+              <div className={cn("text-xs capitalize font-bold leading-none opacity-50 pt-4 px-3 text-purple-950")}>
+                {msg.type === "user_message" ? "You" : "Athena"}
               </div>
-              <button className="w-16 h-16" onClick={() => givedata("asdfasdffasd")}>
-
-      </button>
+              
               <div className="pb-3 px-3">{msg.message.content}</div>
-              <Expressions values={{ ...msg.models.prosody?.scores }} />
+             
             </motion.div>
           );
         }

@@ -35,7 +35,7 @@ export default function Controls() {
               opacity: 0,
             }}
             className={
-              "p-4 bg-card border border-border rounded-lg shadow-sm flex items-center gap-4"
+              "p-4  drop-shadow-xl border-purple-400 border-[3px] bg-gradient-to-t from-purple-50 to-purple-200 z-50  rounded-md shadow-sm flex items-center gap-4"
             }
           >
             <Toggle
