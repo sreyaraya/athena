@@ -61,9 +61,7 @@ export default NextAuth({
         token.email = user.email;
         token.name = user.name;
 
-        if(signInMethods.length()<1){
-        
-        }
+       
 
         const existingUser = auth.currentUser;
           try{

@@ -5,11 +5,64 @@ import { useVoice } from "@humeai/voice-react";
 import Expressions from "./Expressions";
 import { AnimatePresence, motion } from "framer-motion";
 import { ComponentRef, forwardRef, useEffect, useRef, useState } from "react";
+import { useSession, signIn, signOut } from "next-auth/react"
+
+
+
+
+import { initializeApp } from 'firebase/app';
+import { collection, addDoc, query, where, doc, setDoc, getFirestore, updateDoc } from "firebase/firestore";  // Firestore functions
+import { randomBigInt } from "remeda";
+
+
+const firebaseConfig = {
+ apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+ authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+ projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+ storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+ messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+ appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);  // Initialize Firestore
+let data;
+const interviewNum = Math.random()
+
+const addDocToFirestore = async (vec, count, interviewNum) => {
+  try {
+    const data = {
+      name: vec.name,
+      email: vec.email,
+      isAthena: vec.isAthena,
+      text: vec.text,
+      interview: interviewNum,
+      interaction: vec.index,
+      analysis: vec.values,
+    };
+ 
+ 
+    const randomId = randomBigInt(BigInt(100), BigInt(400)); // Generate a random ID
+    const docRef = await addDoc(collection(db, "questions"), data);
+    const doc2 = collection(db, "users")
+    //const q = query(doc2, where('email', '==', data.email))
+    //console.log("Document written with ID: ", randomId);
+    //const userDocRef = doc(db, "users", vec.email);
+    //await updateDoc(userDocRef, {interviews: increment(1)});
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
+ };
+ 
+
 
 const Messages = forwardRef(function Messages(
   { givedata }, // Destructure props
   ref
 ) {
+
+  const { data: session, status } = useSession()
+
+
   const { messages } = useVoice();
   const [sentimentVectors, setSentimentVectors] = useState([]);
   const processedIndices = useRef(new Set());
@@ -20,19 +73,25 @@ const Messages = forwardRef(function Messages(
 
   useEffect(() => {
     const newVectors = [];
+    
 
     messages.forEach((msg, index) => {
       if ((msg.type === "user_message" || msg.type === "assistant_message") && !processedIndices.current.has(index)) {
         processedIndices.current.add(index);
-        newVectors.push({
+        let k = {
           isAthena: msg.type == "assistant_message",
+          email: session?.user.email,
+          name: session?.user?.name,
           text: msg.message.content,
           index: counterRef.current,
           values: msg.models.prosody?.scores,
-        });
+        };
+        console.log(k)
+        addDocToFirestore(k, counterRef.current, interviewNum)
+        newVectors.push(k);
         counterRef.current += 1;
       } else {
-        console.log("session completed")
+        //console.log("session completed")
       }
     });
 
@@ -40,7 +99,7 @@ const Messages = forwardRef(function Messages(
       setSentimentVectors(prev => [...prev, ...newVectors]);
     }
 
-    console.log(sentimentVectors);
+    //console.log(sentimentVectors);
   }, [messages]);
   
   useEffect(() => {

@@ -5,6 +5,7 @@ import { initializeApp } from 'firebase/app';
 import { useEffect, useState } from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { PieChart } from '@mui/x-charts/PieChart';
+import { Gauge, gaugeClasses } from "@mui/x-charts";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -20,12 +21,12 @@ const db = getFirestore(app);
 
 const pieK = 6;
 
-export async function getSessionInfo(email: string, interview: number) {
+export async function getSessionInfo(email: string, interview:number) {
   try {
     const q = query(
       collection(db, 'questions'),
-      where('email', '==', email),
-      where('interview', '==', interview),
+      where('email', '==', "saarnav@berkeley.edu"),
+      where('interview', '==', 1),
       orderBy('interaction', 'asc')
     );
 
@@ -36,7 +37,7 @@ export async function getSessionInfo(email: string, interview: number) {
       text: doc.data().text,
       analysis: doc.data().analysis,
     }));
-
+    
     return responses;
   } catch (error) {
     console.error("Error fetching responses:", error);
@@ -57,12 +58,16 @@ export default function ChartComponent(email: string, interview: number) {
 
   useEffect(() => {
     const fetchResponses = async () => {
+      
+
       const responses = await getSessionInfo(email, interview);
+      
+ 
 
       const interactions = responses.map(resp => resp.interaction);
-      const determinationData = responses.map(resp => resp.analysis?.determination || 0);
-      const awkwardnessData = responses.map(resp => resp.analysis?.awkwardness || 0);
-      const excitementData = responses.map(resp => resp.analysis?.excitement || 0);
+      const determinationData = responses.map(resp => resp.analysis?.determination || 1);
+      const awkwardnessData = responses.map(resp => resp.analysis?.awkwardness || 3);
+      const excitementData = responses.map(resp => resp.analysis?.excitement || 2);
 
       setChartData({
         interactions,
@@ -104,7 +109,7 @@ export default function ChartComponent(email: string, interview: number) {
 
       <div className="grid grid-cols-4 gap-6">
         {/* Top Left Small Chart */}
-        <div className="col-span-1 bg-white rounded-md shadow-md p-4 h-64">
+        <div className="col-span-2 bg-white rounded-md shadow-md p-4 h-64">
         <PieChart
         series={[
           {
@@ -114,18 +119,16 @@ export default function ChartComponent(email: string, interview: number) {
         width={400}
         height={200}
       />
+      <div className="text-2xl text-center mb-4">
+          Most used emotions
+      </div>
         </div>
 
    
+       
+
+
         <div className="col-span-1 bg-white rounded-md shadow-md p-4 h-64 flex justify-center items-center">
-            <div>
-              Overall FeedbackScore:
-              
-            </div>
-        </div>
-
-
-        <div className="col-span-2 bg-white rounded-md shadow-md p-4 h-64 flex justify-center items-center">
             <div>
               <div className="flex flex-col items-center justify-center">
               Things that were well done and things that needed improvement
@@ -162,13 +165,31 @@ export default function ChartComponent(email: string, interview: number) {
         </div>
 
         {/* Bottom Left Small Chart */}
-        <div className="col-span-2 bg-white rounded-md shadow-md p-4 h-64 mt-4">
-          Buzzwords matched according to job description
+        <div className="col-span-1 bg-white rounded-md shadow-lg p-6 h-96 mt-4">
+        <Gauge
+              value={67}
+              startAngle={0}
+              endAngle={360}
+              innerRadius="80%"
+              outerRadius="100%"
+              width={200}
+              height={200}
+              sx={(theme) => ({
+                [`& .${gaugeClasses.valueText}`]: {
+                  fontSize: 40,
+                },
+                [`& .${gaugeClasses.valueArc}`]: {
+                  fill: '#581c87',
+                },
+                
+              })}
+            />
         </div>
+        
 
         {/* Bottom Right Small Chart */}
-        <div className="col-span-2 bg-white rounded-md shadow-md p-4 h-64 mt-4">
-          Overall here are some tips for next time
+        <div className="align-middle text-center text-3xl col-span-2 bg-white rounded-md shadow-md p-4 h-64 mt-4">
+          Key points for next time not loaded...
         </div>
       </div>
     </div>
