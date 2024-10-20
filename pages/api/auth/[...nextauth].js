@@ -3,7 +3,7 @@ import GithubProvider from "../../../lib/customProvider"
 import GoogleProvider from "next-auth/providers/google";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { initializeApp } from 'firebase/app';
-import { collection, doc, getDoc, setDoc, getFirestore, query, where } from "firebase/firestore";  // Firestore functions
+import { collection, doc, setDoc, getFirestore } from "firebase/firestore";  // Firestore functions
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,12 +18,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);  // Correctly initialize Firebase Auth
 const db = getFirestore(app);  // Initialize Firestore
 
-// const citiesRef = collection(db, "cities");
-
-// const q = query(citiesRef, where("capital", "==", true));
-
 export default NextAuth({
-
 
     providers: [
         GithubProvider({
@@ -51,23 +46,19 @@ export default NextAuth({
       session.user.id = token.id; // or any other data you want to include
       session.user.name = token.name; // or any other data you want to include
       session.user.email = token.email; // or any other data you want to include
-    
-      return 
+      
+      console.log(token.email) //debug
+      return session;
     },
 
     async jwt({ token, user }) {
       // If a user is logged in, add their info to the token
-      console.log("mf")
-      console.log(user)
       if (user) {
         token.id = user.id; // or any other data you want to include
         token.email = user.email;
         token.name = user.name;
         
-        const existingUser = auth.user;
-        console.log("hello")
-        console.log(token.name)
-        console.log(existingUser, auth.userCredential, auth.user)
+        const existingUser = auth.currentUser;
 
         if (!existingUser) {
           try{
