@@ -1,5 +1,8 @@
 import ClientComponent from "@/components/Chat";
+import { AnimatePresence } from "framer-motion";
 import { fetchAccessToken } from "hume";
+import Image from "next/image";
+import soundthingy from "../../components/sound.png";
 
 export default async function Page() {
   const accessToken = await fetchAccessToken({
@@ -11,5 +14,9 @@ export default async function Page() {
     throw new Error();
   }
 
-  return <ClientComponent accessToken={accessToken} />;
+  return (
+  <div>
+    <ClientComponent accessToken={accessToken} />
+  </div>)
+  ;
 }
