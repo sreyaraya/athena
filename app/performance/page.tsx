@@ -70,10 +70,10 @@ export default function ChartComponent(email: string, interview: number) {
       const excitementData = responses.map(resp => resp.analysis?.excitement || 2);
 
       setChartData({
-        interactions: [5,10,15],
-        determination: [0,1,4],
-        awkwardness: [1.96,0.35,0.65],
-        excitement: [0.55,0.66,0.22]
+        interactions: [1, 3, 5, 7, 9, 11],
+        determination: [0, .006, 1.2, .32, .12],
+        awkwardness: [1.96,0.35,0.1, .20, .19],
+        excitement: [0.55,0.66,0.2, .58, 1.82]
       });
 
       let sentimentSums = {};
@@ -105,11 +105,14 @@ export default function ChartComponent(email: string, interview: number) {
           Apple SWE Intern Interview
         </h1>
       </div>
-
+      
 
       <div className="grid grid-cols-4 gap-6">
         {/* Top Left Small Chart */}
-        <div className="col-span-2 bg-white rounded-md shadow-md p-4 h-64">
+        <div className="col-span-2 bg-white rounded-md shadow-md p-4 h-72">
+        <div className="text-2xl text-center mb-4">
+          Most Used Emotions:
+      </div>
         <PieChart
         series={[
           {
@@ -119,27 +122,55 @@ export default function ChartComponent(email: string, interview: number) {
         width={400}
         height={200}
       />
-      <div className="text-2xl text-center mb-4">
-          Most used emotions
-      </div>
+      
         </div>
 
    
        
 
 
-        <div className="col-span-1 bg-white rounded-md shadow-md p-4 h-64 flex justify-center items-center">
+        <div className="col-span-1 bg-white rounded-md shadow-md p-4 h-72 flex justify-center items-center">
             <div>
               <div className="flex flex-col items-center justify-center">
-              Things that were well done and things that needed improvement
-
+                <div className="text-2xl mb-4">Overall Feedback:</div>
+              You expressed your interest and enthusiasm well during the interview, and your passion was evident. The way you discussed your interests was engaging, but providing more specific examples would strengthen your responses. Going forward, incorporating concrete examples will enhance the impact of your answers.
               </div>
               
             </div>
         </div>
 
+        <div className="col-span-1 bg-white rounded-md shadow-lg p-6 h-72 flex flex-col justify-center align-middle">
+        
+        <div className="text-2xl text-center">
+              Average Confidence Score:
+            </div>
+        <Gauge
+              className="ml-12"
+              value={67}
+              startAngle={0}
+              endAngle={360}
+              innerRadius="80%"
+              outerRadius="100%"
+              width={200}
+              height={200}
+              sx={(theme) => ({
+                [`& .${gaugeClasses.valueText}`]: {
+                  fontSize: 40,
+                },
+                [`& .${gaugeClasses.valueArc}`]: {
+                  fill: '#581c87',
+                },
+                
+              })}
+            />
+           
+        </div>
+
         {/* Large Center Chart */}
         <div className="col-span-4 bg-white rounded-md shadow-lg p-6 h-96 mt-4">
+        <div className="text-2xl text-center mb-4">
+          Key Sentiment Dynamics:
+      </div>
         <LineChart
       xAxis={[{ data: chartData.interactions }]}
       series={[
@@ -165,7 +196,7 @@ export default function ChartComponent(email: string, interview: number) {
         </div>
 
         {/* Bottom Left Small Chart */}
-        <div className="col-span-1 bg-white rounded-md shadow-lg p-6 h-96 mt-4">
+        <div className="col-span-1 bg-white rounded-md shadow-lg p-6 h-96 mt-4 flex flex-col justify-center align-middle">
         <Gauge
               value={67}
               startAngle={0}
@@ -184,6 +215,9 @@ export default function ChartComponent(email: string, interview: number) {
                 
               })}
             />
+            <div className="text-2xl">
+              Confidence Score
+            </div>
         </div>
         
 
