@@ -17,10 +17,10 @@ To run Athena, you will need API keys for:
 
 2. Create a `.env` file in the root directory and add your Hume.ai, Firebase, and Google Auth API keys.
 
-3. Install development server: 
-```bash
-npm install```
+3. Install development server:
+   
+```npm install```
 
-4. Start development server:
-```bash
-npm run dev```
+5. Start development server:
+
+```npm run dev```
