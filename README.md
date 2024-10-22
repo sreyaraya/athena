@@ -13,7 +13,7 @@ To run Athena, you will need API keys for:
 
 ### Setup Instructions
 
-1. Create Hume.ai Athena configuration: ec2c386a-9e3a-43fe-94b6-f3265e30cffb
+1. Create Hume.ai Athena configuration: ```ec2c386a-9e3a-43fe-94b6-f3265e30cffb```
 
 2. Create a `.env` file in the root directory and add your Hume.ai, Firebase, and Google Auth API keys.
 
